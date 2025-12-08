@@ -21,6 +21,7 @@ typedef struct curso{
     int id;
     int carga_horaria;
     alunos_curso* alunos_do_curso;
+    struct curso* prox;
 } curso;
 
 typedef struct cursos_inf{
