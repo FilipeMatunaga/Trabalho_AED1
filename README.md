@@ -11,8 +11,8 @@ Escopo escolhido:
 Para o problema tema da nossa aplicação escolhemos um sistema de matrículas qualquer, utilizando principalmente as estruturas de dados "Lista" e "Fila" para realizar as possíveis funcionalidades.  
   
 Possíveis funcionalidades:  
-1) Realizar Solicitação Matrícula  
-2) Ver quantas pessoas já fizeram matrícula  
-3) Ver posição na fila de matrícula  
-4) Criar uma matéria  
-5) Acessar informações sobre uma matéria   
+  1. Matricular aluno em um curso;
+  2. Desmatricular aluno de um curso;
+  3. Buscar dados do aluno;
+  4. Editar dados do aluno;
+  5. Consultar quantidade de alunos por curso;
