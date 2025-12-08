@@ -5,23 +5,35 @@
 
 alunos_curso* criar_alunos_curso(){
     alunos_curso* alunos_criado = malloc(sizeof(alunos_curso));
-    alunos_criado->inicio = NULL;
-    alunos_criado->fim = NULL;
+    alunos_criado->inicio = alunos_criado->fim = NULL;
     return alunos_criado;
-}
-
-curso* criar_curso(char nome[200], int carga_horaria){
-    curso* curso_criado = malloc(sizeof(curso));
-    curso_criado->alunos_do_curso = criar_alunos_curso();
-    strcpy(curso_criado->nome, nome);
-    curso_criado->carga_horaria = carga_horaria;
-    return curso_criado;
 }
 
 instituto_informatica* criar_inf(){
     instituto_informatica* inf = malloc(sizeof(instituto_informatica));
+    inf->cursos = malloc(sizeof(cursos_inf));
+    inf->cursos->inicio = inf->cursos->fim = NULL;
     strcpy(inf->nome, "Instituto de Informática");
     return inf;
+}
+
+int criar_curso(char nome[200], int carga_horaria, instituto_informatica* inf){
+    curso* curso_criado = malloc(sizeof(curso));
+
+    if(curso_criado == NULL) return 0;
+    curso_criado->alunos_do_curso = criar_alunos_curso();
+    strcpy(curso_criado->nome, nome);
+    curso_criado->carga_horaria = carga_horaria;
+    curso_criado->prox = NULL;
+
+    if(inf->cursos->inicio == NULL){
+        inf->cursos->inicio = inf->cursos->fim =curso_criado;
+        return 1;
+    }
+
+    inf->cursos->fim->prox = curso_criado;
+    inf->cursos->fim = curso_criado;
+    return 1;
 }
 
 int push_back(aluno aluno_adicionar, alunos_curso* alunos_curso){
@@ -40,3 +52,4 @@ int push_back(aluno aluno_adicionar, alunos_curso* alunos_curso){
     alunos_curso->fim = aluno_novo;
     return 1;
 }   
+
