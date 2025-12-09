@@ -73,8 +73,8 @@ int criar_curso(char nome[200], int id, instituto_informatica* inf){
 }
 
 int adicionar_aluno(aluno aluno_adicionar, instituto_informatica *inf, int id){
+    // printf("Aluno matriculado com sucesso!\n");
     aluno* aluno_novo = malloc(sizeof(aluno));
-    if(aluno_novo == NULL) return 0;
 
     *aluno_novo = aluno_adicionar;
     aluno_novo->prox = NULL;
@@ -84,12 +84,9 @@ int adicionar_aluno(aluno aluno_adicionar, instituto_informatica *inf, int id){
         curso_atual = curso_atual->prox;
     }
 
-    if(curso_atual == NULL){
-        printf("Erro: curso %d não encontrado!\n", id);
-        return 0;
-    }
-
     alunos_curso* lista = curso_atual->alunos_do_curso;
+    system("clear");
+    printf("\n\nAluno matriculado com sucesso!\n");
 
     if(lista->inicio == NULL){
         lista->inicio = lista->fim = aluno_novo;
@@ -124,10 +121,13 @@ int desmatricular_aluno(char cpf[14], instituto_informatica* inf, int id){
     }
 
     if(atual == NULL){
-        printf("Aluno não encontrado!\n");
+        system("clear");
+        printf("\n\nAluno não encontrado!\n\n");
         return 0;
     }
 
+    system("clear");
+    printf("Aluno desmatriculado com sucesso!\n");
     if(anterior == NULL){
         c->alunos_do_curso->inicio = atual->prox;
         if(atual == c->alunos_do_curso->fim)
@@ -143,7 +143,7 @@ int desmatricular_aluno(char cpf[14], instituto_informatica* inf, int id){
 }
 
 void printar_id_curso(){
-    printf("\n=== IDs dos cursos ===\n");
+    printf("\n------- IDs dos cursos ------\n");
     printf("1 - Engenharia de Software\n");
     printf("2 - Ciência da Computação\n");
     printf("3 - Sistemas de Informação\n");
@@ -169,7 +169,8 @@ aluno* buscar_aluno(char cpf[14], instituto_informatica* inf){
 int editar_aluno(char cpf[14], instituto_informatica* inf){
     aluno* a = buscar_aluno(cpf, inf);
     if(a == NULL){
-        printf("Aluno não encontrado!\n");
+        system("clear");
+        printf("\n\nAluno não encontrado!\n");
         return 0;
     }
 
@@ -178,6 +179,10 @@ int editar_aluno(char cpf[14], instituto_informatica* inf){
 
     printf("Novo email: ");
     scanf("%199s", a->email);
+
+    system("clear");
+    printf("\n\nDados editados com sucesso!\n\n");
+
 
     return 1;
 }
@@ -261,8 +266,9 @@ int menu(instituto_informatica* inf){
 
             aluno* a = buscar_aluno(cpf, inf);
 
-            if(a == NULL) printf("Aluno não encontrado.\n");
-            else printf("Nome: %s\nEmail: %s\n", a->nome, a->email);
+            system("clear");
+            if(a == NULL) printf("\n\nAluno não encontrado.\n\n");
+            else printf("\nNome: %s\nEmail: %s\n\n", a->nome, a->email);
             break;
         }
 
@@ -296,12 +302,10 @@ int menu(instituto_informatica* inf){
 
 void limpar(){
     
-    printf("----------------------------------------\n");
-    printf("Insira 0 para voltar ao menu principal.\n");
-    printf("----------------------------------------\n");
+    printf("\n\nInsira 0 para voltar ao menu principal.\n\n");
+    // printf("----------------------------------------\n");
     int c;
     scanf("%d", &c);
-    getchar();
     system("clear");
 }
 
