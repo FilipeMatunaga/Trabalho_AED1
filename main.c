@@ -15,6 +15,7 @@ typedef struct aluno{
 typedef struct alunos_curso{
     aluno* inicio;
     aluno* fim;
+    int tamanho;
 } alunos_curso;
 
 typedef struct curso{
@@ -41,6 +42,7 @@ typedef struct instituto_informatica{
 alunos_curso* criar_alunos_curso(){
     alunos_curso* alunos_criado = malloc(sizeof(alunos_curso));
     alunos_criado->inicio = alunos_criado->fim = NULL;
+    alunos_criado->tamanho = 0;
     return alunos_criado;
 }
 
@@ -85,6 +87,7 @@ int adicionar_aluno(aluno aluno_adicionar, instituto_informatica *inf, int id){
     }
 
     alunos_curso* lista = curso_atual->alunos_do_curso;
+    lista->tamanho++;
     system("clear");
     printf("\n\nAluno matriculado com sucesso!\n");
 
@@ -107,11 +110,6 @@ int desmatricular_aluno(char cpf[14], instituto_informatica* inf, int id){
         c = c->prox;
     }
 
-    if(c == NULL){
-        printf("Curso não encontrado!\n");
-        return 0;
-    }
-
     aluno* atual = c->alunos_do_curso->inicio;
     aluno* anterior = NULL;
 
@@ -128,6 +126,9 @@ int desmatricular_aluno(char cpf[14], instituto_informatica* inf, int id){
 
     system("clear");
     printf("Aluno desmatriculado com sucesso!\n");
+    
+    c->alunos_do_curso->tamanho--;
+
     if(anterior == NULL){
         c->alunos_do_curso->inicio = atual->prox;
         if(atual == c->alunos_do_curso->fim)
@@ -194,19 +195,7 @@ int quantidade_alunos_por_curso(instituto_informatica* inf, int id){
         c = c->prox;
     }
 
-    if(c == NULL){
-        printf("Curso não encontrado!\n");
-        return -1;
-    }
-
-    int count = 0;
-    aluno* a = c->alunos_do_curso->inicio;
-
-    while(a != NULL){
-        count++;
-        a = a->prox;
-    }
-
+    int count = c->alunos_do_curso->tamanho;
     return count;
 }
 
@@ -225,6 +214,8 @@ int menu(instituto_informatica* inf){
     scanf("%d", &n);
     getchar();
 
+    system("clear");
+
     switch (n){
         case 1:{
             printar_id_curso();
@@ -232,6 +223,8 @@ int menu(instituto_informatica* inf){
             printf("ID do curso: ");
             scanf("%d", &id);
             getchar();
+
+            system("clear");
 
             aluno novo;
             printf("Nome: ");
@@ -255,6 +248,8 @@ int menu(instituto_informatica* inf){
             scanf("%d", &id);
             getchar();
 
+            system("clear");
+
             desmatricular_aluno(cpf, inf, id);
             break;
         }
@@ -267,6 +262,7 @@ int menu(instituto_informatica* inf){
             aluno* a = buscar_aluno(cpf, inf);
 
             system("clear");
+
             if(a == NULL) printf("\n\nAluno não encontrado.\n\n");
             else printf("\nNome: %s\nEmail: %s\n\n", a->nome, a->email);
             break;
@@ -276,6 +272,9 @@ int menu(instituto_informatica* inf){
             char cpf[14];
             printf("CPF: ");
             scanf("%14s", cpf);
+
+            system("clear");
+
             editar_aluno(cpf, inf);
             break;
         }
@@ -286,8 +285,11 @@ int menu(instituto_informatica* inf){
             printf("ID do curso: ");
             scanf("%d", &id);
             getchar();
+
+            system("clear");
+
             int qtd = quantidade_alunos_por_curso(inf, id);
-            printf("Quantidade: %d\n", qtd);
+            printf("Quantidade de alunos no curso: %d\n", qtd);
             break;
         }
 
@@ -295,7 +297,8 @@ int menu(instituto_informatica* inf){
             return 0;
 
         default:
-            printf("Número inválido!\n");
+            system("clear");
+            printf("\n\nNúmero inválido!\n");
     }
     return 1;
 }
@@ -324,7 +327,7 @@ int main(){
     strcpy(nome, "Inteligência Artificial");
     criar_curso(nome, 4, inf);
     
-    printf("Olá! Seja bem vindo ao nosso sistema de matrículaaaas.\n");
+    printf("Olá! Seja bem vindo ao nosso sistema de matrículas.\n");
     int num;    
 
     while (1){
